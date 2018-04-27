@@ -24,21 +24,14 @@ annotations: [
 ]) {
 
   node(label) {
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'payment_service_aws_credentials',
-    usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-      withEnv(["LEIN_USERNAME=$USERNAME",
-               "LEIN_PASSWORD=$PASSWORD",
-               "GIT_BRANCH=${sha1}"]) {
 
-        def COMPOSE_CONFIG = 'docker-compose-ci.yml'
+    def COMPOSE_CONFIG = 'docker-compose-ci.yml'
 
-        stage('setup'){
-          echo "Building branch ${sha1}"
-          checkout([$class: 'GitSCM', branches: [[name: "${sha1}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'test_deploy_key', url: 'git@github.com:shutl/payment_service.git']]])
-          sh "git status"
-        }
-      }
+    stage('setup'){
+      echo "Building branch ${sha1}"
+      checkout([$class: 'GitSCM', branches: [[name: "${sha1}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'test_deploy_key', url: 'git@github.com:jwilf/test.git']]])
+      sh "git status"
     }
   }
 }
