@@ -31,13 +31,15 @@ annotations: [
     stage('setup'){
       echo "Building branch ${sha1}"
       checkout([$class: 'GitSCM', branches: [[name: "${sha1}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'test_deploy_key', url: 'git@github.com:jwilf/test.git']]])
-      sh """
-        git status
-        date > date.txt
-        git add date.txt
-        git commit -m 'update date.txt'
-        git push --set-upstream origin master
-      """
+      sshagent(['test_deploy_key']) {
+        sh """
+          git status
+          date > date.txt
+          git add date.txt
+          git commit -m 'update date.txt'
+          git push --set-upstream origin master
+        """
+      }
     }
   }
 }
