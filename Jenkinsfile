@@ -30,7 +30,8 @@ annotations: [
 
     stage('setup'){
       echo "Building branch ${sha1}"
-      checkout([$class: 'GitSCM', branches: [[name: "${sha1}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'test_deploy_key', url: 'git@github.com:jwilf/test.git']]])
+      // checkout([$class: 'GitSCM', branches: [[name: "${sha1}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: '']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'test_deploy_key', url: 'git@github.com:jwilf/test.git']]])
+      checkout scm
       sh "git status"
     }
   }
