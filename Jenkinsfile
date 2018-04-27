@@ -35,6 +35,7 @@ annotations: [
         git status
         date > date.txt
         git add date.txt
+        git commit -m 'update date.txt'
         git push --set-upstream origin master
       """
     }
